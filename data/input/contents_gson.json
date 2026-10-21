@@ -1,0 +1,159 @@
+{
+  "source": "DistribuidorDigital",
+  "items": [
+    {
+      "ref": 401,
+      "kind": "film",
+      "name": "Dune: Part Two",
+      "credits": {
+        "director": "Denis Villeneuve"
+      },
+      "metadata": {
+        "genre": "Ciència-ficció",
+        "releaseDate": "2024-03-01",
+        "availableOn": "Max"
+      },
+      "content": {
+        "minutes": 166
+      }
+    },
+    {
+      "ref": 402,
+      "kind": "show",
+      "name": "Chernobyl",
+      "credits": {
+        "director": "Johan Renck"
+      },
+      "metadata": {
+        "genre": "Drama històric",
+        "releaseDate": "2019-05-06",
+        "availableOn": "Max"
+      },
+      "content": {
+        "seasons": [
+          {
+            "index": 1,
+            "episodes": [
+              {
+                "index": 1,
+                "name": "1:23:45",
+                "runtime": 58
+              },
+              {
+                "index": 2,
+                "name": "Please Remain Calm",
+                "runtime": 65
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "ref": 403,
+      "kind": "show",
+      "name": "The Last of Us",
+      "credits": {
+        "director": "Craig Mazin"
+      },
+      "metadata": {
+        "genre": "Drama postapocalíptic",
+        "releaseDate": "2023-01-15",
+        "availableOn": "Max"
+      },
+      "content": {
+        "seasons": [
+          {
+            "index": 1,
+            "episodes": [
+              {
+                "index": 1,
+                "name": "When You're Lost in the Darkness",
+                "runtime": 81
+              },
+              {
+                "index": 2,
+                "name": "Infected",
+                "runtime": 53
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "ref": 404,
+      "kind": "film",
+      "name": "Everything Everywhere All at Once",
+      "credits": {
+        "director": "Daniel Kwan i Daniel Scheinert"
+      },
+      "metadata": {
+        "genre": "Ciència-ficció",
+        "releaseDate": "2022-03-25",
+        "availableOn": "Prime Video"
+      },
+      "content": {
+        "minutes": 139
+      }
+    },
+    {
+      "ref": 405,
+      "kind": "show",
+      "name": "Severance",
+      "credits": {
+        "director": "Ben Stiller"
+      },
+      "metadata": {
+        "genre": "Thriller",
+        "releaseDate": "2022-02-18",
+        "availableOn": "Apple TV+"
+      },
+      "content": {
+        "seasons": [
+          {
+            "index": 1,
+            "episodes": [
+              {
+                "index": 1,
+                "name": "Good News About Hell",
+                "runtime": 57
+              },
+              {
+                "index": 2,
+                "name": "Half Loop",
+                "runtime": 53
+              }
+            ]
+          },
+          {
+            "index": 2,
+            "episodes": [
+              {
+                "index": 1,
+                "name": "Hello, Ms. Cobel",
+                "runtime": 45
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "ref": 406,
+      "kind": "film",
+      "name": "Whiplash",
+      "credits": {
+        "director": "Damien Chazelle"
+      },
+      "metadata": {
+        "genre": "Drama",
+        "releaseDate": "2014-10-10",
+        "availableOn": "Filmin"
+      },
+      "content": {
+        "minutes": 107
+      }
+    }
+  ]
+}

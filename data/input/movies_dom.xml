@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='utf-8'?>
+<movies>
+    <movie>
+        <sourceId>101</sourceId>
+        <name>Interstellar</name>
+        <director>
+            <name>Christopher Nolan</name>
+        </director>
+        <genre>Ciència-ficció</genre>
+        <releaseDate>2014-11-07</releaseDate>
+        <platform>Max</platform>
+        <runtime>169</runtime>
+    </movie>
+    <movie>
+        <sourceId>102</sourceId>
+        <name>Oppenheimer</name>
+        <director>
+            <name>Christopher Nolan</name>
+        </director>
+        <genre>Drama històric</genre>
+        <releaseDate>2023-07-21</releaseDate>
+        <platform>SkyShowtime</platform>
+        <runtime>180</runtime>
+    </movie>
+    <movie>
+        <sourceId>103</sourceId>
+        <name>El viatge de Chihiro</name>
+        <director>
+            <name>Hayao Miyazaki</name>
+        </director>
+        <genre>Animació</genre>
+        <releaseDate>2001-07-20</releaseDate>
+        <platform>Netflix</platform>
+        <runtime>125</runtime>
+    </movie>
+    <movie>
+        <sourceId>104</sourceId>
+        <name>El padrí</name>
+        <director>
+            <name>Francis Ford Coppola</name>
+        </director>
+        <genre>Drama</genre>
+        <releaseDate>1972-03-24</releaseDate>
+        <platform>Filmin</platform>
+        <runtime>175</runtime>
+    </movie>
+    <movie>
+        <sourceId>105</sourceId>
+        <name>Parasite</name>
+        <director>
+            <name>Bong Joon-ho</name>
+        </director>
+        <genre>Thriller</genre>
+        <releaseDate>2019-05-30</releaseDate>
+        <platform>Filmin</platform>
+        <runtime>132</runtime>
+    </movie>
+    <movie>
+        <sourceId>106</sourceId>
+        <name>La La Land</name>
+        <director>
+            <name>Damien Chazelle</name>
+        </director>
+        <genre>Musical</genre>
+        <releaseDate>2016-12-09</releaseDate>
+        <platform>Prime Video</platform>
+        <runtime>128</runtime>
+    </movie>
+</movies>

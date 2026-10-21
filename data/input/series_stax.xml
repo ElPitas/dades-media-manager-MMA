@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='utf-8'?>
+<series>
+    <show premiere="2008-01-20" id="201">
+        <title>Breaking Bad</title>
+        <details genre="Drama" platform="Netflix">
+            <director>Vince Gilligan</director>
+        </details>
+        <season number="1">
+            <episode number="1" minutes="58">
+                <title>Pilot</title>
+            </episode>
+            <episode number="2" minutes="48">
+                <title>Cat's in the Bag...</title>
+            </episode>
+            <episode number="3" minutes="48">
+                <title>...And the Bag's in the River</title>
+            </episode>
+        </season>
+        <season number="2">
+            <episode number="1" minutes="47">
+                <title>Seven Thirty-Seven</title>
+            </episode>
+            <episode number="2" minutes="46">
+                <title>Grilled</title>
+            </episode>
+            <episode number="3" minutes="47">
+                <title>Bit by a Dead Bee</title>
+            </episode>
+        </season>
+    </show>
+    <show premiere="2017-12-01" id="202">
+        <title>Dark</title>
+        <details genre="Misteri" platform="Netflix">
+            <director>Baran bo Odar</director>
+        </details>
+        <season number="1">
+            <episode number="1" minutes="51">
+                <title>Secrets</title>
+            </episode>
+            <episode number="2" minutes="44">
+                <title>Lies</title>
+            </episode>
+            <episode number="3" minutes="45">
+                <title>Past and Present</title>
+            </episode>
+        </season>
+        <season number="2">
+            <episode number="1" minutes="53">
+                <title>Beginnings and Endings</title>
+            </episode>
+            <episode number="2" minutes="54">
+                <title>Dark Matter</title>
+            </episode>
+            <episode number="3" minutes="56">
+                <title>Ghosts</title>
+            </episode>
+        </season>
+    </show>
+    <show premiere="2016-07-15" id="203">
+        <title>Stranger Things</title>
+        <details genre="Ciència-ficció" platform="Netflix">
+            <director>The Duffer Brothers</director>
+        </details>
+        <season number="1">
+            <episode number="1" minutes="47">
+                <title>Chapter One: The Vanishing of Will Byers</title>
+            </episode>
+            <episode number="2" minutes="55">
+                <title>Chapter Two: The Weirdo on Maple Street</title>
+            </episode>
+            <episode number="3" minutes="51">
+                <title>Chapter Three: Holly, Jolly</title>
+            </episode>
+        </season>
+        <season number="2">
+            <episode number="1" minutes="48">
+                <title>Chapter One: MADMAX</title>
+            </episode>
+            <episode number="2" minutes="56">
+                <title>Chapter Two: Trick or Treat, Freak</title>
+            </episode>
+            <episode number="3" minutes="51">
+                <title>Chapter Three: The Pollywog</title>
+            </episode>
+        </season>
+    </show>
+    <show premiere="2016-11-04" id="204">
+        <title>The Crown</title>
+        <details genre="Drama històric" platform="Netflix">
+            <director>Peter Morgan</director>
+        </details>
+        <season number="1">
+            <episode number="1" minutes="57">
+                <title>Wolferton Splash</title>
+            </episode>
+            <episode number="2" minutes="61">
+                <title>Hyde Park Corner</title>
+            </episode>
+            <episode number="3" minutes="59">
+                <title>Windsor</title>
+            </episode>
+        </season>
+    </show>
+    <show premiere="2005-03-24" id="205">
+        <title>The Office</title>
+        <details genre="Comèdia" platform="Peacock">
+            <director>Greg Daniels</director>
+        </details>
+        <season number="1">
+            <episode number="1" minutes="23">
+                <title>Pilot</title>
+            </episode>
+            <episode number="2" minutes="22">
+                <title>Diversity Day</title>
+            </episode>
+            <episode number="3" minutes="22">
+                <title>Health Care</title>
+            </episode>
+        </season>
+        <season number="2">
+            <episode number="1" minutes="22">
+                <title>The Dundies</title>
+            </episode>
+            <episode number="2" minutes="22">
+                <title>Sexual Harassment</title>
+            </episode>
+            <episode number="3" minutes="22">
+                <title>Office Olympics</title>
+            </episode>
+        </season>
+    </show>
+    <show premiere="2016-07-21" id="206">
+        <title>Fleabag</title>
+        <details genre="Comèdia dramàtica" platform="Prime Video">
+            <director>Harry Bradbeer</director>
+        </details>
+        <season number="1">
+            <episode number="1" minutes="27">
+                <title>Episode 1</title>
+            </episode>
+            <episode number="2" minutes="26">
+                <title>Episode 2</title>
+            </episode>
+            <episode number="3" minutes="27">
+                <title>Episode 3</title>
+            </episode>
+        </season>
+    </show>
+</series>

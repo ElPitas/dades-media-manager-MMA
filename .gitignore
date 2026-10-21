@@ -1,0 +1,59 @@
+# Maven and Java build output
+target/
+bin/
+*.class
+
+# Generated exercise output
+data/output/
+
+# Eclipse workspace and project metadata
+.project
+.classpath
+.settings/
+.metadata/
+.recommenders/
+.externalToolBuilders/
+.factorypath
+*.launch
+
+# Other IDE metadata
+.idea/
+*.iml
+.vscode/
+
+# Operating-system and editor temporary files
+.DS_Store
+Thumbs.db
+Desktop.ini
+*~
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# Teacher-only instructions, specifications, manifests and tests
+[Aa][Gg][Ee][Nn][Tt][Ss].[Mm][Dd]
+CLAUDE.md
+.agents/
+.codex/
+.claude/
+docs/practica/
+student-distribution-manifest*
+*distribution-manifest*
+MainTest.java
+PersistenceSkeletonTest.java
+teacher-only/
+solutions/
+
+# Maven Wrapper is intentionally excluded from this distribution
+mvnw
+mvnw.cmd
+.mvn/
+
+# Local secrets and personal configuration
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx

@@ -1,0 +1,160 @@
+{
+  "provider": "ScreenArchive",
+  "records": [
+    {
+      "externalId": "J-501",
+      "mediaType": "MOVIE",
+      "title": "Arrival",
+      "director": "Denis Villeneuve",
+      "genre": "Science fiction",
+      "releaseDate": "2016-11-11",
+      "platform": "Prime Video",
+      "movieDetails": {
+        "durationMinutes": 116
+      }
+    },
+    {
+      "externalId": "J-502",
+      "mediaType": "SERIES",
+      "title": "The Queen's Gambit",
+      "director": "Scott Frank",
+      "genre": "Drama",
+      "releaseDate": "2020-10-23",
+      "platform": "Netflix",
+      "seriesDetails": {
+        "seasons": [
+          {
+            "seasonNumber": 1,
+            "chapters": [
+              {
+                "chapterNumber": 1,
+                "title": "Openings",
+                "durationMinutes": 59
+              },
+              {
+                "chapterNumber": 2,
+                "title": "Exchanges",
+                "durationMinutes": 65
+              },
+              {
+                "chapterNumber": 3,
+                "title": "Doubled Pawns",
+                "durationMinutes": 46
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "externalId": "J-503",
+      "mediaType": "MOVIE",
+      "title": "The Grand Budapest Hotel",
+      "director": "Wes Anderson",
+      "genre": "Comedy",
+      "releaseDate": "2014-03-07",
+      "platform": "Disney+",
+      "movieDetails": {
+        "durationMinutes": 99
+      }
+    },
+    {
+      "externalId": "J-504",
+      "mediaType": "SERIES",
+      "title": "Stranger Things",
+      "director": "The Duffer Brothers",
+      "genre": "Science fiction",
+      "releaseDate": "2016-07-15",
+      "platform": "Netflix",
+      "seriesDetails": {
+        "seasons": [
+          {
+            "seasonNumber": 1,
+            "chapters": [
+              {
+                "chapterNumber": 1,
+                "title": "The Vanishing of Will Byers",
+                "durationMinutes": 47
+              },
+              {
+                "chapterNumber": 2,
+                "title": "The Weirdo on Maple Street",
+                "durationMinutes": 55
+              }
+            ]
+          },
+          {
+            "seasonNumber": 2,
+            "chapters": [
+              {
+                "chapterNumber": 1,
+                "title": "MADMAX",
+                "durationMinutes": 48
+              },
+              {
+                "chapterNumber": 2,
+                "title": "Trick or Treat, Freak",
+                "durationMinutes": 56
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "externalId": "J-505",
+      "mediaType": "MOVIE",
+      "title": "The Truman Show",
+      "director": "Peter Weir",
+      "genre": "Drama",
+      "releaseDate": "1998-06-05",
+      "platform": "Prime Video",
+      "movieDetails": {
+        "durationMinutes": 103
+      }
+    },
+    {
+      "externalId": "J-506",
+      "mediaType": "SERIES",
+      "title": "The Bear",
+      "director": "Christopher Storer",
+      "genre": "Comedy-drama",
+      "releaseDate": "2022-06-23",
+      "platform": "Disney+",
+      "seriesDetails": {
+        "seasons": [
+          {
+            "seasonNumber": 1,
+            "chapters": [
+              {
+                "chapterNumber": 1,
+                "title": "System",
+                "durationMinutes": 27
+              },
+              {
+                "chapterNumber": 2,
+                "title": "Hands",
+                "durationMinutes": 28
+              }
+            ]
+          },
+          {
+            "seasonNumber": 2,
+            "chapters": [
+              {
+                "chapterNumber": 1,
+                "title": "Beef",
+                "durationMinutes": 30
+              },
+              {
+                "chapterNumber": 2,
+                "title": "Pasta",
+                "durationMinutes": 31
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

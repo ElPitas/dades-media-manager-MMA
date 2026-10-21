@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='utf-8'?>
+<distributor>
+    <filmList>
+        <film reference="101" name="Arrival" released="2016-11-11">
+            <creators>
+                <name>Denis Villeneuve</name>
+            </creators>
+            <classification>
+                <name>Ciència-ficció</name>
+            </classification>
+            <availability>
+                <name>Filmin</name>
+            </availability>
+            <footage minutes="116" />
+        </film>
+        <film reference="102" name="Coco" released="2017-11-22">
+            <creators>
+                <name>Lee Unkrich</name>
+            </creators>
+            <classification>
+                <name>Animació</name>
+            </classification>
+            <availability>
+                <name>Disney+</name>
+            </availability>
+            <footage minutes="105" />
+        </film>
+        <film reference="103" name="Parasite" released="2019-05-30">
+            <creators>
+                <name>Bong Joon-ho</name>
+            </creators>
+            <classification>
+                <name>Thriller</name>
+            </classification>
+            <availability>
+                <name>Filmin</name>
+            </availability>
+            <footage minutes="132" />
+        </film>
+        <film reference="104" name="The Truman Show" released="1998-06-05">
+            <creators>
+                <name>Peter Weir</name>
+            </creators>
+            <classification>
+                <name>Drama</name>
+            </classification>
+            <availability>
+                <name>SkyShowtime</name>
+            </availability>
+            <footage minutes="103" />
+        </film>
+        <film reference="105" name="Wall-E" released="2008-06-27">
+            <creators>
+                <name>Andrew Stanton</name>
+            </creators>
+            <classification>
+                <name>Animació</name>
+            </classification>
+            <availability>
+                <name>Disney+</name>
+            </availability>
+            <footage minutes="98" />
+        </film>
+    </filmList>
+    <name>International Film Distributor</name>
+</distributor>

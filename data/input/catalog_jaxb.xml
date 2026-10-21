@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<supplierCatalog>
+    <entries>
+        <entry>
+            <sourceCode>301</sourceCode>
+            <category>movie</category>
+            <generalInfo>
+                <name>La vida és bella</name>
+                <director>Roberto Benigni</director>
+                <genre>Comèdia dramàtica</genre>
+                <releaseDate>1997-12-20</releaseDate>
+                <service>Filmin</service>
+            </generalInfo>
+            <details>
+                <movie>
+                    <minutes>116</minutes>
+                </movie>
+            </details>
+        </entry>
+        <entry>
+            <sourceCode>302</sourceCode>
+            <category>show</category>
+            <generalInfo>
+                <name>Merlí</name>
+                <director>Eduard Cortés</director>
+                <genre>Drama</genre>
+                <releaseDate>2015-09-14</releaseDate>
+                <service>3Cat</service>
+            </generalInfo>
+            <details>
+                <show>
+                    <seasonBlocks>
+                        <block number="1">
+                            <episodeList>
+                                <episode>
+                                    <order>1</order>
+                                    <name>Els peripatètics</name>
+                                    <minutes>50</minutes>
+                                </episode>
+                                <episode>
+                                    <order>2</order>
+                                    <name>Plató</name>
+                                    <minutes>50</minutes>
+                                </episode>
+                            </episodeList>
+                        </block>
+                    </seasonBlocks>
+                </show>
+            </details>
+        </entry>
+        <entry>
+            <sourceCode>303</sourceCode>
+            <category>movie</category>
+            <generalInfo>
+                <name>Cinema Paradiso</name>
+                <director>Giuseppe Tornatore</director>
+                <genre>Drama</genre>
+                <releaseDate>1988-11-17</releaseDate>
+                <service>Filmin</service>
+            </generalInfo>
+            <details>
+                <movie>
+                    <minutes>155</minutes>
+                </movie>
+            </details>
+        </entry>
+        <entry>
+            <sourceCode>304</sourceCode>
+            <category>show</category>
+            <generalInfo>
+                <name>Les de l’hoquei</name>
+                <director>Patricia Font</director>
+                <genre>Drama</genre>
+                <releaseDate>2019-04-29</releaseDate>
+                <service>3Cat</service>
+            </generalInfo>
+            <details>
+                <show>
+                    <seasonBlocks>
+                        <block number="1">
+                            <episodeList>
+                                <episode>
+                                    <order>1</order>
+                                    <name>Episodi 1</name>
+                                    <minutes>50</minutes>
+                                </episode>
+                                <episode>
+                                    <order>2</order>
+                                    <name>Episodi 2</name>
+                                    <minutes>48</minutes>
+                                </episode>
+                            </episodeList>
+                        </block>
+                        <block number="2">
+                            <episodeList>
+                                <episode>
+                                    <order>1</order>
+                                    <name>Episodi 1</name>
+                                    <minutes>51</minutes>
+                                </episode>
+                            </episodeList>
+                        </block>
+                    </seasonBlocks>
+                </show>
+            </details>
+        </entry>
+        <entry>
+            <sourceCode>305</sourceCode>
+            <category>movie</category>
+            <generalInfo>
+                <name>Amélie</name>
+                <director>Jean-Pierre Jeunet</director>
+                <genre>Comèdia romàntica</genre>
+                <releaseDate>2001-04-25</releaseDate>
+                <service>Filmin</service>
+            </generalInfo>
+            <details>
+                <movie>
+                    <minutes>122</minutes>
+                </movie>
+            </details>
+        </entry>
+        <entry>
+            <sourceCode>306</sourceCode>
+            <category>show</category>
+            <generalInfo>
+                <name>El col·lapse</name>
+                <director>Les Parasites</director>
+                <genre>Drama</genre>
+                <releaseDate>2019-11-11</releaseDate>
+                <service>Filmin</service>
+            </generalInfo>
+            <details>
+                <show>
+                    <seasonBlocks>
+                        <block number="1">
+                            <episodeList>
+                                <episode>
+                                    <order>1</order>
+                                    <name>Supermercat</name>
+                                    <minutes>20</minutes>
+                                </episode>
+                                <episode>
+                                    <order>2</order>
+                                    <name>Estació de servei</name>
+                                    <minutes>18</minutes>
+                                </episode>
+                            </episodeList>
+                        </block>
+                    </seasonBlocks>
+                </show>
+            </details>
+        </entry>
+    </entries>
+</supplierCatalog>
