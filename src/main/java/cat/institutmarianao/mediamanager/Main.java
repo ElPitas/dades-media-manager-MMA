@@ -43,6 +43,8 @@ import cat.institutmarianao.mediamanager.persistence.xml.StaxSeriesImporter;
  * correctness; that belongs to a later solution-validation phase.
  */
 public final class Main {
+    private static final String NOT_REQUESTED = "Not requested.";
+
     private final Catalog catalog = new Catalog();
     private final File inputDirectory;
     private final File outputDirectory;
@@ -64,8 +66,12 @@ public final class Main {
      *         1-jaxb, 2-gson or 2-jackson; all paths are relative to the project root
      */
     public static void main(String[] args) {
-        String mode = args != null && args.length == 0 ? "all"
-                : args != null && args.length == 1 ? args[0] : null;
+        String mode = null;
+        if (args != null && args.length == 0) {
+            mode = "all";
+        } else if (args != null && args.length == 1) {
+            mode = args[0];
+        }
         if (!isValidMode(mode)) {
             System.out.println("Usage: Main [all|1|2|3|4|5|6|1-dom|1-sax|1-stax|1-jaxb|2-gson|2-jackson]");
             return;
@@ -86,7 +92,7 @@ public final class Main {
             if (isImportSelected(mode, task)) {
                 importStatuses.put(task, runImport(task, input));
             } else {
-                report(task.id + " import", input, Status.NOT_SELECTED, "Not requested.");
+                report(task.id + " import", input, Status.NOT_SELECTED, NOT_REQUESTED);
             }
         }
         printCatalogSummary();
@@ -189,7 +195,7 @@ public final class Main {
     private boolean runExport(String mode, String task, String label, File output,
             IOAction operation) {
         if (!mode.equals("all") && !mode.equals(task)) {
-            report(label, output, Status.NOT_SELECTED, "Not requested.");
+            report(label, output, Status.NOT_SELECTED, NOT_REQUESTED);
             return false;
         }
         if (catalog.size() == 0) {
@@ -230,7 +236,7 @@ public final class Main {
         boolean created = runExport(mode, "6", "Task 6 binary creation", binary,
                 () -> dao.createCatalog(binary, catalog.getContents()));
         if (!mode.equals("all") && !mode.equals("6")) {
-            report("Task 6 binary lookup", binary, Status.NOT_SELECTED, "Not requested.");
+            report("Task 6 binary lookup", binary, Status.NOT_SELECTED, NOT_REQUESTED);
             return;
         }
         if (!created) {
@@ -244,7 +250,8 @@ public final class Main {
         int absentCode = Math.addExact(catalog.size(), 1);
         execute("Task 6 lookup absent code " + absentCode, binary, () -> {
             Optional<BinaryCatalogRecord> found = dao.findByCode(binary, absentCode);
-            require(found != null && found.isEmpty(), "Absent code must return Optional.empty()");
+            Objects.requireNonNull(found, "Binary lookup returned a null Optional");
+            require(found.isEmpty(), "Absent code must return Optional.empty()");
             System.out.println("  No record found, as expected.");
         });
     }
@@ -266,17 +273,18 @@ public final class Main {
     }
 
     private void verifyRecord(MediaContent expected, Optional<BinaryCatalogRecord> found) {
-        require(found != null && found.isPresent(), "Expected binary record was not returned");
-        BinaryCatalogRecord record = found.orElseThrow();
+        Objects.requireNonNull(found, "Binary lookup returned a null Optional");
+        require(found.isPresent(), "Expected binary record was not returned");
+        BinaryCatalogRecord binaryRecord = found.orElseThrow();
         int seasons = expected instanceof Series series ? series.getSeasonCount() : 0;
         int episodes = expected instanceof Series series ? series.getEpisodeCount() : 0;
         String context = " for code " + expected.getCode();
-        require(record.getCode() == expected.getCode(), "Binary code mismatch" + context);
-        require(record.getTitle().equals(expected.getTitle()), "Binary title mismatch" + context);
-        require(record.getType() == expected.getType(), "Binary type mismatch" + context);
-        require(record.getReleaseDate().equals(expected.getReleaseDate()), "Binary date mismatch" + context);
-        require(record.getSeasons() == seasons, "Binary season count mismatch" + context);
-        require(record.getEpisodes() == episodes, "Binary episode count mismatch" + context);
+        require(binaryRecord.getCode() == expected.getCode(), "Binary code mismatch" + context);
+        require(binaryRecord.getTitle().equals(expected.getTitle()), "Binary title mismatch" + context);
+        require(binaryRecord.getType() == expected.getType(), "Binary type mismatch" + context);
+        require(binaryRecord.getReleaseDate().equals(expected.getReleaseDate()), "Binary date mismatch" + context);
+        require(binaryRecord.getSeasons() == seasons, "Binary season count mismatch" + context);
+        require(binaryRecord.getEpisodes() == episodes, "Binary episode count mismatch" + context);
     }
 
     private static void require(boolean condition, String message) {
