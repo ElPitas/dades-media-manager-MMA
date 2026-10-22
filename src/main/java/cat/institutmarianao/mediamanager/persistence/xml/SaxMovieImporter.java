@@ -40,6 +40,9 @@ public class SaxMovieImporter {
      * @throws ExerciseNotImplementedException while this exercise is unfinished
      */
     public List<Movie> importMovies(File input) throws IOException {
+    	
+    	
+    	
         // TODO Task 1: Implement the SaxMovieImporter operation.
         throw new ExerciseNotImplementedException("Task 1: SaxMovieImporter");
     }

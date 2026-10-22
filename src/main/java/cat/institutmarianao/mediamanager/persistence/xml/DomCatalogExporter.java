@@ -41,8 +41,7 @@ public class DomCatalogExporter {
      *         preserve the cause and useful file context
      * @throws ExerciseNotImplementedException while this exercise is unfinished
      */
-    public void exportCatalog(File output, Collection<? extends MediaContent> contents)
-            throws IOException {
+    public void exportCatalog(File output, Collection<? extends MediaContent> contents)throws IOException {
         // TODO Task 4: Implement the DomCatalogExporter operation.
         throw new ExerciseNotImplementedException("Task 4: DomCatalogExporter");
     }
