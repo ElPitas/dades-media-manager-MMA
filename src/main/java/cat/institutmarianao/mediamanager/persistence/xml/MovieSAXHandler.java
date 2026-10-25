@@ -1,11 +1,11 @@
 package cat.institutmarianao.mediamanager.persistence.xml;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import cat.institutmarianao.mediamanager.model.Movie;
@@ -13,18 +13,18 @@ import cat.institutmarianao.mediamanager.model.Movie;
 public class MovieSAXHandler extends DefaultHandler {
 
 	private List<Movie> peliculas;
-	private Movie peliculaActual;
 	private StringBuilder contenido;
 
-	private String sourceId;
-	private String nombre;
-	private String nombreDirector;
+	private String titulo;
+	private String director;
 	private String genero;
 	private String fechaEstreno;
 	private String plataforma;
-	private String duracion;
+	private String runtime;
 
-	private boolean dentroDirector;
+	private boolean dentroCreators;
+	private boolean dentroClassification;
+	private boolean dentroAvailability;
 
 	public MovieSAXHandler() {
 	}
@@ -38,137 +38,94 @@ public class MovieSAXHandler extends DefaultHandler {
 		peliculas = new ArrayList<>();
 		contenido = new StringBuilder();
 
-		peliculaActual = null;
-		dentroDirector = false;
+		dentroCreators = false;
+		dentroClassification = false;
+		dentroAvailability = false;
 	}
-
-	// Aqui termina el trabajo humano, tlabaja tiene que tlabajá
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) {
 
-		String etiqueta = obtenerNombreEtiqueta(localName, qName);
 		contenido.setLength(0);
 
-		if ("movie".equals(etiqueta)) {
-			peliculaActual = null;
+		if ("film".equals(qName)) {
+			// El título y la fecha están en los atributos de film.
+			titulo = attributes.getValue("name");
+			fechaEstreno = attributes.getValue("released");
 
-			sourceId = null;
-			nombre = null;
-			nombreDirector = null;
+			// Reiniciamos los datos de la nueva película.
+			director = null;
 			genero = null;
-			fechaEstreno = null;
 			plataforma = null;
-			duracion = null;
+			runtime = null;
 
-			dentroDirector = false;
+			dentroCreators = false;
+			dentroClassification = false;
+			dentroAvailability = false;
 		}
 
-		if ("director".equals(etiqueta)) {
-			dentroDirector = true;
+		if ("creators".equals(qName)) {
+			dentroCreators = true;
+		}
+
+		if ("classification".equals(qName)) {
+			dentroClassification = true;
+		}
+
+		if ("availability".equals(qName)) {
+			dentroAvailability = true;
+		}
+
+		if ("footage".equals(qName)) {
+			// La duración está en el atributo minutes.
+			runtime = attributes.getValue("minutes");
 		}
 	}
 
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
-
-		// El texto puede llegar fragmentado en varios eventos.
 		contenido.append(ch, start, length);
 	}
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 
-		String etiqueta = obtenerNombreEtiqueta(localName, qName);
 		String texto = contenido.toString().trim();
 
-		switch (etiqueta) {
-
-		case "sourceId":
-			sourceId = texto;
-			break;
+		switch (qName) {
 
 		case "name":
-			// Hay dos etiquetas <name> en el XML.
-			if (dentroDirector) {
-				nombreDirector = texto;
-			} else {
-				nombre = texto;
+			if (dentroCreators) {
+				director = texto;
+			} else if (dentroClassification) {
+				genero = texto;
+			} else if (dentroAvailability) {
+				plataforma = texto;
 			}
+			// El name de distributor se ignora.
 			break;
 
-		case "genre":
-			genero = texto;
+		case "creators":
+			dentroCreators = false;
 			break;
 
-		case "releaseDate":
-			fechaEstreno = texto;
+		case "classification":
+			dentroClassification = false;
 			break;
 
-		case "platform":
-			plataforma = texto;
+		case "availability":
+			dentroAvailability = false;
 			break;
 
-		case "runtime":
-			duracion = texto;
-			break;
+		case "film":
+			// Ya tenemos todos los datos de la película.
+			Movie peliculaActual = new Movie(titulo, director, genero, LocalDate.parse(fechaEstreno), plataforma,
+					Integer.parseInt(runtime));
 
-		case "director":
-			dentroDirector = false;
-			break;
-
-		case "movie":
-			// Hemos terminado de leer una película.
-			crearPelicula();
+			peliculas.add(peliculaActual);
 			break;
 		}
 
 		contenido.setLength(0);
 	}
-
-	private void crearPelicula() throws SAXException {
-
-		// Comprobar que estén presentes los campos obligatorios.
-		comprobarCampo(sourceId, "sourceId");
-		comprobarCampo(nombre, "name");
-		comprobarCampo(nombreDirector, "director/name");
-		comprobarCampo(genero, "genre");
-		comprobarCampo(fechaEstreno, "releaseDate");
-		comprobarCampo(plataforma, "platform");
-		comprobarCampo(duracion, "runtime");
-
-		try {
-			// Convertir los datos a los tipos que necesita Movie.
-			LocalDate fecha = LocalDate.parse(fechaEstreno);
-			int runtime = Integer.parseInt(duracion);
-
-			// Crear el objeto Movie.
-			peliculaActual = new Movie(nombre, nombreDirector, genero, fecha, plataforma, runtime);
-
-			// Añadir la película a la lista.
-			peliculas.add(peliculaActual);
-
-		} catch (DateTimeException | IllegalArgumentException e) {
-			throw new SAXException("Datos inválidos en la película con sourceId: " + sourceId, e);
-		}
-	}
-
-	private void comprobarCampo(String valor, String campo) throws SAXException {
-
-		if (valor == null || valor.trim().isEmpty()) {
-			throw new SAXException("Falta el campo obligatorio o está vacío: " + campo);
-		}
-	}
-
-	private String obtenerNombreEtiqueta(String localName, String qName) {
-
-		// Con namespaces desactivados normalmente utilizaremos qName.
-		// Si qName está vacío, recurrimos a localName.
-		if (qName != null && !qName.isEmpty()) {
-			return qName;
-		}
-
-		return localName;
-	}
-
 }
