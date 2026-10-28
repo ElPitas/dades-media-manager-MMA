@@ -49,11 +49,9 @@ public class MovieSAXHandler extends DefaultHandler {
 		contenido.setLength(0);
 
 		if ("film".equals(qName)) {
-			// El título y la fecha están en los atributos de film.
 			titulo = attributes.getValue("name");
 			fechaEstreno = attributes.getValue("released");
 
-			// Reiniciamos los datos de la nueva película.
 			director = null;
 			genero = null;
 			plataforma = null;
@@ -77,7 +75,6 @@ public class MovieSAXHandler extends DefaultHandler {
 		}
 
 		if ("footage".equals(qName)) {
-			// La duración está en el atributo minutes.
 			runtime = attributes.getValue("minutes");
 		}
 	}
@@ -102,7 +99,6 @@ public class MovieSAXHandler extends DefaultHandler {
 			} else if (dentroAvailability) {
 				plataforma = texto;
 			}
-			// El name de distributor se ignora.
 			break;
 
 		case "creators":
@@ -118,7 +114,6 @@ public class MovieSAXHandler extends DefaultHandler {
 			break;
 
 		case "film":
-			// Ya tenemos todos los datos de la película.
 			Movie peliculaActual = new Movie(titulo, director, genero, LocalDate.parse(fechaEstreno), plataforma,
 					Integer.parseInt(runtime));
 
