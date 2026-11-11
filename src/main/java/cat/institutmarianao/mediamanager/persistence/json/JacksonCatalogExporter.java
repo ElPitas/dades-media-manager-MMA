@@ -1,50 +1,132 @@
+
 package cat.institutmarianao.mediamanager.persistence.json;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import cat.institutmarianao.mediamanager.dto.JacksonCatalogExportDTO;
+import cat.institutmarianao.mediamanager.dto.JacksonCatalogExportDTO.EpisodeDTO;
+import cat.institutmarianao.mediamanager.dto.JacksonCatalogExportDTO.MovieDTO;
+import cat.institutmarianao.mediamanager.dto.JacksonCatalogExportDTO.SeasonDTO;
+import cat.institutmarianao.mediamanager.dto.JacksonCatalogExportDTO.SeriesDTO;
+import cat.institutmarianao.mediamanager.model.Episode;
 import cat.institutmarianao.mediamanager.model.MediaContent;
-import cat.institutmarianao.mediamanager.persistence.ExerciseNotImplementedException;
+import cat.institutmarianao.mediamanager.model.Movie;
+import cat.institutmarianao.mediamanager.model.Season;
+import cat.institutmarianao.mediamanager.model.Series;
 
-/**
- * Student exercise for generating unified_catalog.json using Jackson Data Binding with ObjectMapper.
- * The class is independent of Main and must use traditional Java I/O.
- */
 public class JacksonCatalogExporter {
-    /**
-     * Creates a stateless exporter without opening any files.
-     */
-    public JacksonCatalogExporter() {
-    }
 
-    /**
-     * Replaces the requested file with the catalogue representation for Task 5.
-     * Use student-created output binding classes and the exact movies and series
-     * arrays in Task 5, including empty arrays and no additional properties.
-     * Do not concatenate JSON text or use JsonGenerator or Gson.
-     *
-     * <p>Sort movies and series separately by ascending, case-insensitive title,
-     * then ascending internal code for ties. Seasons and episodes must appear in
-     * ascending numerical order within their parent. Dates use yyyy-MM-dd and
-     * runtimes are whole minutes without units.
-     *
-     * <p>Receive already-coded objects and preserve their values, relationships
-     * and original collection orders. Write UTF-8 using traditional Java I/O,
-     * close resources, and do not print to the console. Replace previous output
-     * completely; do not append. The caller creates missing parent directories.
-     *
-     * @param output destination file; never null
-     * @param contents non-null catalogue collection with non-null, coded objects
-     * @throws NullPointerException if an argument or content is null after implementation
-     * @throws IllegalArgumentException if contents contain unassigned codes
-     * @throws IOException if output, configuration or serialization fails;
-     *         preserve the cause and useful file context
-     * @throws ExerciseNotImplementedException while this exercise is unfinished
-     */
-    public void exportCatalog(File output, Collection<? extends MediaContent> contents)
-            throws IOException {
-        // TODO Task 5: Implement the JacksonCatalogExporter operation.
-        throw new ExerciseNotImplementedException("Task 5: JacksonCatalogExporter");
-    }
+	public JacksonCatalogExporter() {
+	}
+
+	public void exportCatalog(File output, Collection<? extends MediaContent> contents) throws IOException {
+
+		Objects.requireNonNull(output, "output");
+		Objects.requireNonNull(contents, "contents");
+
+		List<Movie> movies = new ArrayList<>();
+		List<Series> series = new ArrayList<>();
+
+		for (MediaContent content : contents) {
+
+			Objects.requireNonNull(content, "content");
+
+			if (content.getCode() <= 0) {
+				throw new IllegalArgumentException("El contenido no tiene un código asignado: " + content.getTitle());
+			}
+
+			if (content instanceof Movie) {
+
+				movies.add((Movie) content);
+
+			} else if (content instanceof Series) {
+
+				series.add((Series) content);
+
+			} else {
+
+				throw new IllegalArgumentException("Tipo de contenido no reconocido: " + content.getClass().getName());
+			}
+		}
+
+		Comparator<MediaContent> comparator = Comparator
+				.comparing(MediaContent::getTitle, String.CASE_INSENSITIVE_ORDER)
+				.thenComparingInt(MediaContent::getCode);
+
+		movies.sort(comparator);
+		series.sort(comparator);
+
+		List<MovieDTO> movieDTOs = new ArrayList<>();
+
+		for (Movie movie : movies) {
+
+			MovieDTO movieDTO = new MovieDTO(movie.getCode(), movie.getTitle(), movie.getDirector(), movie.getGenre(),
+					movie.getReleaseDate().toString(), movie.getPlatform(), movie.getRuntime());
+
+			movieDTOs.add(movieDTO);
+		}
+
+		List<SeriesDTO> seriesDTOs = new ArrayList<>();
+
+		for (Series serie : series) {
+
+			List<SeasonDTO> seasonDTOs = new ArrayList<>();
+
+			List<Season> seasons = new ArrayList<>(serie.getSeasons());
+
+			seasons.sort(Comparator.comparingInt(Season::getNumber));
+
+			for (Season season : seasons) {
+
+				List<EpisodeDTO> episodeDTOs = new ArrayList<>();
+
+				List<Episode> episodes = new ArrayList<>(season.getEpisodes());
+
+				episodes.sort(Comparator.comparingInt(Episode::getNumber));
+
+				for (Episode episode : episodes) {
+
+					EpisodeDTO episodeDTO = new EpisodeDTO(episode.getNumber(), episode.getTitle(),
+							episode.getRuntime());
+
+					episodeDTOs.add(episodeDTO);
+				}
+
+				SeasonDTO seasonDTO = new SeasonDTO(season.getNumber(), episodeDTOs);
+
+				seasonDTOs.add(seasonDTO);
+			}
+
+			SeriesDTO seriesDTO = new SeriesDTO(serie.getCode(), serie.getTitle(), serie.getDirector(),
+					serie.getGenre(), serie.getReleaseDate().toString(), serie.getPlatform(), seasonDTOs);
+
+			seriesDTOs.add(seriesDTO);
+		}
+
+		JacksonCatalogExportDTO catalogDTO = new JacksonCatalogExportDTO(movieDTOs, seriesDTOs);
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		try (BufferedWriter writer = new BufferedWriter(
+				new OutputStreamWriter(new FileOutputStream(output, false), StandardCharsets.UTF_8))) {
+
+			mapper.writerWithDefaultPrettyPrinter().writeValue(writer, catalogDTO);
+
+		} catch (IOException e) {
+
+			throw new IOException("Error al exportar el catálogo JSON: " + output.getCanonicalPath(), e);
+		}
+	}
 }

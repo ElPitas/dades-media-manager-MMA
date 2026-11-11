@@ -1,79 +1,190 @@
+
 package cat.institutmarianao.mediamanager.persistence.binary;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import cat.institutmarianao.mediamanager.model.MediaContent;
-import cat.institutmarianao.mediamanager.persistence.ExerciseNotImplementedException;
+import cat.institutmarianao.mediamanager.model.Movie;
+import cat.institutmarianao.mediamanager.model.Series;
 
-/**
- * Student exercise for binary catalogue creation and direct lookup.
- * All binary file access belongs here and must use RandomAccessFile.
- */
 public class BinaryCatalogDao {
-    /**
-     * Creates a stateless DAO without opening or restoring a file.
-     */
-    public BinaryCatalogDao() {
-    }
 
-    /**
-     * Replaces the binary file with the current in-memory catalogue using Task 6's layout.
-     *
-     * <p>Each record occupies exactly 102 bytes. Fields, in order, are code
-     * (int), title (40 Java char values), type (char, P or S), release date
-     * (long epoch day), season count (int) and total episode count (int).
-     * Movie season and episode counts are zero.
-     *
-     * <p>Codes must be unique and contiguous starting at one. Physical placement
-     * depends on code, independently of collection iteration order. Titles shorter
-     * than 40 UTF-16 code units are padded with spaces; longer titles are rejected
-     * with a meaningful exception and must never be silently truncated.
-     * Contents from successful imports are sufficient; all source files need not
-     * have been imported successfully.
-     *
-     * <p>Use RandomAccessFile and current domain objects without rereading sources.
-     * Preserve all source objects and collections, close resources, replace any
-     * previous contents completely, and do not print to the console.
-     * The caller creates missing parent directories.
-     *
-     * @param output destination file; never null
-     * @param contents current non-null catalogue collection without null elements
-     * @throws NullPointerException if an argument or content is null after implementation
-     * @throws IllegalArgumentException if codes violate the contract or a title
-     *         exceeds 40 UTF-16 code units
-     * @throws IOException if binary output fails; preserve cause and file context
-     * @throws ExerciseNotImplementedException while this exercise is unfinished
-     */
-    public void createCatalog(File output, Collection<? extends MediaContent> contents)
-            throws IOException {
-        // TODO Task 6: Implement binary catalogue creation.
-        throw new ExerciseNotImplementedException("Task 6: binary catalogue creation");
-    }
+	private static final int RECORD_SIZE = 102;
+	private static final int TITLE_LENGTH = 40;
 
-    /**
-     * Retrieves a summary by direct access using RandomAccessFile.
-     *
-     * <p>Return a BinaryCatalogRecord for an existing code, or an empty Optional
-     * for an absent positive code in a valid file. Missing, unreadable or malformed
-     * files are errors, not absent records. The returned title excludes physical
-     * trailing padding spaces; its release date is a LocalDate.
-     * Close resources and do not print to the console or alter the file.
-     * This lookup must never restore or modify an in-memory Catalog.
-     *
-     * @param input binary catalogue file; never null
-     * @param code positive internal code
-     * @return the requested summary or empty when absent; never null
-     * @throws NullPointerException if input is null after implementation
-     * @throws IllegalArgumentException if code is not positive
-     * @throws IOException if input is missing, unreadable, malformed or cannot be
-     *         decoded; preserve the cause and useful file context
-     * @throws ExerciseNotImplementedException while this exercise is unfinished
-     */
-    public Optional<BinaryCatalogRecord> findByCode(File input, int code) throws IOException {
-        // TODO Task 6: Implement direct binary lookup by internal code.
-        throw new ExerciseNotImplementedException("Task 6: direct binary lookup");
-    }
+	public BinaryCatalogDao() {
+	}
+
+	public void createCatalog(File output, Collection<? extends MediaContent> contents) throws IOException {
+
+		Objects.requireNonNull(output, "output");
+		Objects.requireNonNull(contents, "contents");
+
+		List<MediaContent> orderedContents = new ArrayList<>(contents);
+
+		for (MediaContent content : orderedContents) {
+
+			Objects.requireNonNull(content, "content");
+
+			if (content.getCode() <= 0) {
+				throw new IllegalArgumentException("El contenido no tiene un código asignado: " + content.getTitle());
+			}
+
+			if (content.getTitle().isBlank()) {
+				throw new IllegalArgumentException("El título no puede estar vacío");
+			}
+
+			if (content.getTitle().length() > TITLE_LENGTH) {
+				throw new IllegalArgumentException("El título supera los 40 caracteres: " + content.getTitle());
+			}
+
+			if (!(content instanceof Movie) && !(content instanceof Series)) {
+
+				throw new IllegalArgumentException("Tipo de contenido no reconocido: " + content.getClass().getName());
+			}
+		}
+
+		orderedContents.sort(Comparator.comparingInt(MediaContent::getCode));
+
+		for (int i = 0; i < orderedContents.size(); i++) {
+
+			int expectedCode = i + 1;
+
+			if (orderedContents.get(i).getCode() != expectedCode) {
+				throw new IllegalArgumentException(
+						"Los códigos deben ser únicos y consecutivos " + "desde 1. Código esperado: " + expectedCode);
+			}
+		}
+
+		try (RandomAccessFile file = new RandomAccessFile(output, "rw")) {
+
+			file.setLength(0);
+
+			for (MediaContent content : orderedContents) {
+
+				long position = (long) (content.getCode() - 1) * RECORD_SIZE;
+
+				file.seek(position);
+
+				file.writeInt(content.getCode());
+
+				String title = content.getTitle();
+
+				for (int i = 0; i < TITLE_LENGTH; i++) {
+
+					if (i < title.length()) {
+						file.writeChar(title.charAt(i));
+					} else {
+						file.writeChar(' ');
+					}
+				}
+
+				file.writeChar(content.getType());
+
+				file.writeLong(content.getReleaseDate().toEpochDay());
+
+				if (content instanceof Series) {
+
+					Series series = (Series) content;
+
+					file.writeInt(series.getSeasonCount());
+
+					file.writeInt(series.getEpisodeCount());
+
+				} else {
+
+					file.writeInt(0);
+
+					file.writeInt(0);
+				}
+			}
+
+		} catch (IOException e) {
+
+			throw new IOException("Error al crear el catálogo binario: " + output.getAbsolutePath(), e);
+		}
+	}
+
+	public Optional<BinaryCatalogRecord> findByCode(File input, int code) throws IOException {
+
+		Objects.requireNonNull(input, "input");
+
+		if (code <= 0) {
+			throw new IllegalArgumentException("El código debe ser positivo");
+		}
+
+		try (RandomAccessFile file = new RandomAccessFile(input, "r")) {
+
+			long fileLength = file.length();
+
+			if (fileLength % RECORD_SIZE != 0) {
+				throw new IOException("El archivo binario tiene una longitud incorrecta");
+			}
+
+			long position = (long) (code - 1) * RECORD_SIZE;
+
+			if (position >= fileLength) {
+				return Optional.empty();
+			}
+
+			file.seek(position);
+
+			int storedCode = file.readInt();
+
+			if (storedCode != code) {
+				throw new IOException("El código almacenado no coincide con su posición");
+			}
+
+			char[] titleChars = new char[TITLE_LENGTH];
+
+			for (int i = 0; i < TITLE_LENGTH; i++) {
+				titleChars[i] = file.readChar();
+			}
+
+			int titleLength = TITLE_LENGTH;
+
+			while (titleLength > 0 && titleChars[titleLength - 1] == ' ') {
+
+				titleLength--;
+			}
+
+			String title = new String(titleChars, 0, titleLength);
+
+			char type = file.readChar();
+
+			long epochDay = file.readLong();
+
+			int seasons = file.readInt();
+
+			int episodes = file.readInt();
+
+			try {
+
+				LocalDate releaseDate = LocalDate.ofEpochDay(epochDay);
+
+				BinaryCatalogRecord record = new BinaryCatalogRecord(storedCode, title, type, releaseDate, seasons,
+						episodes);
+
+				return Optional.of(record);
+
+			} catch (DateTimeException | IllegalArgumentException e) {
+
+				throw new IOException("El registro binario contiene datos incorrectos " + "para el código: " + code, e);
+			}
+
+		} catch (IOException e) {
+
+			throw new IOException("Error al consultar el catálogo binario: " + input.getAbsolutePath(), e);
+		}
+	}
 }
